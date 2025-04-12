@@ -1,45 +1,28 @@
-name: Auto Update 280blocker Filter
+import requests
+from datetime import datetime
 
-on:
-  schedule:
-    - cron: '0 15 * * *' # 毎日午前0時に実行 (JSTだと午前9時)
-  workflow_dispatch: # 手動実行を可能にする
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0',
+    'Referer': 'https://280blocker.net/'
+}
 
-jobs:
-  update:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+now = datetime.now()
+year = now.year
+month = now.month
 
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: '3.x'
+current_filename = f"280blocker_adblock_{year:04d}{month:02d}.txt"
+base_url = "https://280blocker.net/files/"
+current_url = base_url + current_filename
+output_filename = "280blocker_adblock.txt" # 保存するファイル名は固定
 
-      - name: Install dependencies
-        run: |
-          pip install requests
-          pip install selenium  # selenium をインストールするコマンドを追加
+response = requests.get(current_url, headers=headers)
 
-      - name: Set User-Agent
-        run: echo "USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" >> $GITHUB_ENV
-
-      - name: Download and update filter
-        run: python update_filter_script.py
-          env:
-            USER_AGENT: ${{ env.USER_AGENT }}
-
-      - name: Commit and push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config --global user.name "Your Bot Name"
-          git config --global user.email "your-bot-email@example.com"
-          git add 280blocker_adblock.txt # 保存したファイル名
-          if git diff --staged --quiet; then
-            echo "No changes to commit."
-          else
-            git commit -m "自動更新: 280blockerフィルターを更新"
-            git push origin main
-          fi
+if response.status_code == 200:
+    # ファイルが存在する場合
+    filter_content = response.text
+    with open(output_filename, "w") as f:
+        f.write(filter_content)
+    print(f"Successfully downloaded and saved: {current_filename}")
+else:
+    print(f"Error: 当月 ({current_filename}) のフィルターリストが見つかりませんでした (Status Code: {response.status_code})")
+    exit(1)
