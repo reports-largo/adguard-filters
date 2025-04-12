@@ -12,4 +12,4 @@
 ||ytad.googleusercontent.com^
 ||manifest.googlevideo.com^
 ||video-ad-stats.l.google.com^
-||googlevideo.com^$important
+||googlevideo.com^
