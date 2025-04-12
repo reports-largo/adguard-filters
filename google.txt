@@ -1,0 +1,12 @@
+! === Google 検索スポンサー広告 ブロックセット ===
+||pagead2.googlesyndication.com^
+||googleads.g.doubleclick.net^
+||ad.doubleclick.net^
+||pubads.g.doubleclick.net^
+||securepubads.g.doubleclick.net^
+||partner.googleadservices.com^
+||googleadservices.com^
+||adservice.google.com^
+||adservice.google.co.jp^
+||adservice.google.co.uk^
+||cm.g.doubleclick.net^
