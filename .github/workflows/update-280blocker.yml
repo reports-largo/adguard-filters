@@ -12,8 +12,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Get current year and month
+        id: date
+        run: echo "year_month=$(date +'%Y%m')" >> $GITHUB_ENV
+
       - name: Download latest 280blocker filter
-        run: curl -L -o filters/280blocker.txt https://280blocker.net/files/280blocker_adblock.txt
+        run: |
+          curl -L -o filters/280blocker.txt https://280blocker.net/files/280blocker_adblock_${{ env.year_month }}.txt
 
       - name: Commit and push changes
         run: |
