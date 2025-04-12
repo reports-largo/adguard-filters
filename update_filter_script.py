@@ -1,28 +1,24 @@
-import requests
-from datetime import datetime
+name: Update 280blocker filter
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0',
-    'Referer': 'https://280blocker.net/'
-}
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 毎日 9:00 JST
+  workflow_dispatch:
 
-now = datetime.now()
-year = now.year
-month = now.month
+jobs:
+  update-280blocker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-current_filename = f"280blocker_adblock_{year:04d}{month:02d}.txt"
-base_url = "https://280blocker.net/files/"
-current_url = base_url + current_filename
-output_filename = "280blocker_adblock.txt" # 保存するファイル名は固定
+      - name: Download latest 280blocker filter
+        run: curl -L -o filters/280blocker.txt https://280blocker.net/files/280blocker_adblock.txt
 
-response = requests.get(current_url, headers=headers)
-
-if response.status_code == 200:
-    # ファイルが存在する場合
-    filter_content = response.text
-    with open(output_filename, "w") as f:
-        f.write(filter_content)
-    print(f"Successfully downloaded and saved: {current_filename}")
-else:
-    print(f"Error: 当月 ({current_filename}) のフィルターリストが見つかりませんでした (Status Code: {response.status_code})")
-    exit(1)
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add filters/280blocker.txt
+          git commit -m 'Auto-update 280blocker filter' || echo "No changes to commit"
+          git push
