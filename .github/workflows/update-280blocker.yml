@@ -3,7 +3,7 @@ name: Update 280blocker filter
 on:
   schedule:
     - cron: '0 0 * * *'  # 毎日 9:00 JST
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 jobs:
   update-280blocker:
@@ -15,20 +15,22 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18 # または使用しているバージョン
+          node-version: 18
 
       - name: Install and start Xvfb
         run: |
           sudo apt-get update
           sudo apt-get install -y xvfb
           Xvfb :99 -screen 0 1280x1024x24 &
-          export DISPLAY=:99
+          echo "DISPLAY=:99" >> $GITHUB_ENV
 
       - name: Install dependencies
-        run: npm install # working-directory は指定しない
+        run: npm install
+        working-directory: ./scripts
 
       - name: Run update script
-        run: node ./scripts/update-280blocker.js
+        run: node update-280blocker.js
+        working-directory: ./scripts
 
       - name: Commit and push changes
         run: |
