@@ -16,6 +16,9 @@ jobs:
         id: date
         run: echo "year_month=$(date +'%Y%m')" >> $GITHUB_ENV
 
+      - name: Create filters directory
+        run: mkdir -p filters
+
       - name: Download latest 280blocker filter
         run: |
           curl -L -o filters/280blocker.txt https://280blocker.net/files/280blocker_adblock_${{ env.year_month }}.txt
