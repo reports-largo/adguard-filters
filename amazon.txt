@@ -2,6 +2,7 @@
 ! Description: amazonアプリの広告をブロックするためのフィルタセット
 ! Version: 1.0
 ! Last updated: 2025-04-12
+! Last modified: 2025-04-12T06:01:40.123Z
 ! Homepage: https://github.com/reports-largo/adguard-filters
 ! 
 ! === YouTube アプリ広告 最強ブロックセット ===
