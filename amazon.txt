@@ -1,15 +1,15 @@
 ! === YouTube アプリ広告 最強ブロックセット ===
-||youtubeadservice.google.com^
-||ads.youtube.com^
-||pagead2.googlesyndication.com^
-||googleads.g.doubleclick.net^
-||ad.doubleclick.net^
-||tpc.googlesyndication.com^
-||pubads.g.doubleclick.net^
-||securepubads.g.doubleclick.net^
-||redirector.googlevideo.com^
-||r*.googlevideo.com^
-||ytad.googleusercontent.com^
-||manifest.googlevideo.com^
-||video-ad-stats.l.google.com^
-||googlevideo.com^
+||youtubeadservice.google.com^$important
+||ads.youtube.com^$important
+||pagead2.googlesyndication.com^$important
+||googleads.g.doubleclick.net^$important
+||ad.doubleclick.net^$important
+||tpc.googlesyndication.com^$important
+||pubads.g.doubleclick.net^$important
+||securepubads.g.doubleclick.net^$important
+||redirector.googlevideo.com^$important
+||r[0-9]*.googlevideo.com^$important
+||ytad.googleusercontent.com^$important
+||manifest.googlevideo.com/api/manifest/hfr/ads^$important
+||video-ad-stats.l.google.com^$important
+! 最後の行を削除（googlevideo.com全体をブロックするとYouTube自体が機能しなくなります）
