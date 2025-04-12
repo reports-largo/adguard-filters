@@ -1,0 +1,14 @@
+{
+  "name": "update-280blocker",
+  "version": "1.0.0",
+  "description": "Script to download 280blocker filter using Puppeteer",
+  "main": "update-280blocker.js",
+  "scripts": {
+    "start": "node update-280blocker.js"
+  },
+  "dependencies": {
+    "puppeteer": "^21.3.8"
+  },
+  "author": "",
+  "license": "MIT"
+}
