@@ -1,0 +1,15 @@
+! === YouTube アプリ広告 最強ブロックセット ===
+||youtubeadservice.google.com^
+||ads.youtube.com^
+||pagead2.googlesyndication.com^
+||googleads.g.doubleclick.net^
+||ad.doubleclick.net^
+||tpc.googlesyndication.com^
+||pubads.g.doubleclick.net^
+||securepubads.g.doubleclick.net^
+||redirector.googlevideo.com^
+||r*.googlevideo.com^
+||ytad.googleusercontent.com^
+||manifest.googlevideo.com^
+||video-ad-stats.l.google.com^
+||googlevideo.com^$important
