@@ -1,24 +1,43 @@
-name: Update 280blocker filter
+name: Auto Update 280blocker Filter
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # 毎日 0時 UTC（日本時間で9時くらい）
-  workflow_dispatch:      # 手動実行もできる
+    - cron: '0 15 * * *' # 毎日午前0時に実行 (JSTだと午前9時)
+  workflow_dispatch: # 手動実行を可能にする
 
 jobs:
-  update-280blocker:
+  update:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Download latest 280blocker filter
-        run: curl -L -o filters/280blocker.txt https://280blocker.net/files/280blocker_adblock_202504.txt
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
 
-      - name: Commit and push changes
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Download and update filter
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@github.com'
-          git add filters/280blocker.txt
-          git commit -m 'Auto-update 280blocker filter' || echo "No changes to commit"
-          git push
+          import requests
+          import os
+
+          filter_url = "https://raw.githubusercontent.com/280blocker/ad-filters/master/easylist.txt" # 更新したいフィルターのURL
+          response = requests.get(filter_url)
+          response.raise_for_status()
+
+          with open("easylist.txt", "w") as f: # リポジトリに保存したいファイル名
+            f.write(response.text)
+
+          # 変更があればコミット＆プッシュ
+          if os.system("git diff --quiet") != 0:
+            git config --global user.name "Your Bot Name"
+            git config --global user.email "your-bot-email@example.com"
+            git add easylist.txt # 更新したファイル
+            git commit -m "自動更新: 280blockerフィルターを更新"
+            git push origin main # メインブランチの名前
