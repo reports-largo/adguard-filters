@@ -1,6 +1,8 @@
 import requests
 from datetime import datetime
 
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
+
 now = datetime.now()
 year = now.year
 month = now.month
@@ -10,7 +12,7 @@ base_url = "https://280blocker.net/files/"
 current_url = base_url + current_filename
 output_filename = "280blocker_adblock.txt" # 保存するファイル名は固定
 
-response = requests.get(current_url)
+response = requests.get(current_url, headers=headers)
 
 if response.status_code == 200:
     # ファイルが存在する場合
