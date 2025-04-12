@@ -1,12 +1,18 @@
+! Title: Google 検索スポンサー広告 ブロックセット
+! Description: Google検索のスポンサー広告をブロックするためのフィルタセット
+! Version: 1.0
+! Last modified: 2025-04-12T06:30:00Z
+! Homepage: https://github.com/reports-largo/adguard-filters
+! 
 ! === Google 検索スポンサー広告 ブロックセット ===
-||pagead2.googlesyndication.com^
-||googleads.g.doubleclick.net^
-||ad.doubleclick.net^
-||pubads.g.doubleclick.net^
-||securepubads.g.doubleclick.net^
-||partner.googleadservices.com^
-||googleadservices.com^
-||adservice.google.com^
-||adservice.google.co.jp^
-||adservice.google.co.uk^
-||cm.g.doubleclick.net^
+||pagead2.googlesyndication.com^$important
+||googleads.g.doubleclick.net^$important
+||ad.doubleclick.net^$important
+||pubads.g.doubleclick.net^$important
+||securepubads.g.doubleclick.net^$important
+||partner.googleadservices.com^$important
+||googleadservices.com^$important
+||adservice.google.com^$important
+||adservice.google.co.jp^$important
+||adservice.google.co.uk^$important
+||cm.g.doubleclick.net^$important
