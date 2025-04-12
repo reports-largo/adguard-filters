@@ -1,27 +1,29 @@
-name: Update 280blocker filter
+name: Update 280blocker Filter
 
 on:
   schedule:
     - cron: '0 0 * * *'  # 毎日 9:00 JST
-  workflow_dispatch:
+  workflow_dispatch:  # 手動実行も可能
 
 jobs:
-  update-280blocker:
+  update:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Get current year and month
-        id: date
-        run: echo "year_month=$(date +'%Y%m')" >> $GITHUB_ENV
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
 
-      - name: Create filters directory
-        run: mkdir -p filters
-
-      - name: Download latest 280blocker filter
+      - name: Install dependencies
         run: |
-          curl -L -o filters/280blocker.txt https://280blocker.net/files/280blocker_adblock_${{ env.year_month }}.txt
+          npm install puppeteer
+
+      - name: Run Puppeteer script to download 280blocker filter
+        run: |
+          node ./scripts/update-280blocker.js
 
       - name: Commit and push changes
         run: |
