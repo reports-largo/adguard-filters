@@ -1,34 +1,38 @@
-name: Update 280blocker Filter
+const puppeteer = require('puppeteer');
+const fs = require('fs');
 
-on:
-  schedule:
-    - cron: '0 0 * * *'  # 毎日 9:00 JST
-  workflow_dispatch:  # 手動実行も可能
+(async () => {
+  // ヘッドレスモードをfalseに設定
+  const browser = await puppeteer.launch({
+    headless: false, // ヘッドレスモードを無効化
+    args: [
+      '--no-sandbox', 
+      '--disable-setuid-sandbox', 
+      '--disable-gpu', 
+      '--window-size=1280x1024', 
+      '--ignore-certificate-errors',
+    ]
+  });
 
-jobs:
-  update:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  const page = await browser.newPage();
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
+  // 280blocker のフィルターURL
+  const url = 'https://280blocker.net/files/280blocker_adblock_202504.txt';
 
-      - name: Install dependencies
-        run: |
-          npm install puppeteer
+  // ページにアクセス
+  await page.goto(url, { waitUntil: 'networkidle0' });
 
-      - name: Run Puppeteer script to download 280blocker filter
-        run: |
-          node ./scripts/update-280blocker.js
+  // コンテンツを取得して保存
+  const content = await page.content();
 
-      - name: Commit and push changes
-        run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@github.com'
-          git add filters/280blocker.txt
-          git commit -m 'Auto-update 280blocker filter' || echo "No changes to commit"
-          git push
+  // フォルダが無ければ作成
+  fs.mkdirSync('filters', { recursive: true });
+
+  // 取得したコンテンツ（フィルター）を保存
+  fs.writeFileSync('filters/280blocker.txt', content);
+
+  console.log('✅ Successfully downloaded and saved 280blocker filter');
+
+  // ブラウザを閉じる
+  await browser.close();
+})();
