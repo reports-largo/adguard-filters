@@ -1,21 +1,21 @@
 ! Title: YouTube アプリ広告 最強ブロックセット
 ! Description: YouTubeアプリの広告をブロックするためのフィルタセット
 ! Version: 1.0
-! Last updated: 2025-04-12
+! Last modified: 2025-04-12T06:35:00Z
 ! Homepage: https://github.com/reports-largo/adguard-filters
 ! 
 ! === YouTube アプリ広告 最強ブロックセット ===
-||youtubeadservice.google.com^
-||ads.youtube.com^
-||pagead2.googlesyndication.com^
-||googleads.g.doubleclick.net^
-||ad.doubleclick.net^
-||tpc.googlesyndication.com^
-||pubads.g.doubleclick.net^
-||securepubads.g.doubleclick.net^
-||redirector.googlevideo.com^
-||r*.googlevideo.com^
-||ytad.googleusercontent.com^
-||manifest.googlevideo.com^
-||video-ad-stats.l.google.com^
+||youtubeadservice.google.com^$important
+||ads.youtube.com^$important
+||pagead2.googlesyndication.com^$important
+||googleads.g.doubleclick.net^$important
+||ad.doubleclick.net^$important
+||tpc.googlesyndication.com^$important
+||pubads.g.doubleclick.net^$important
+||securepubads.g.doubleclick.net^$important
+||redirector.googlevideo.com^$important
+||r*.googlevideo.com^$important
+||ytad.googleusercontent.com^$important
+||manifest.googlevideo.com^$important
+||video-ad-stats.l.google.com^$important
 ||googlevideo.com^$important
