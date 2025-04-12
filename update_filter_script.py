@@ -18,7 +18,11 @@ output_filename = "280blocker_adblock.txt" # 保存するファイル名は固�
 response = requests.get(current_url, headers=headers)
 
 if response.status_code == 200:
-    # ... (以降の処理は同じ)
+    # ファイルが存在する場合
+    filter_content = response.text
+    with open(output_filename, "w") as f:
+        f.write(filter_content)
+    print(f"Successfully downloaded and saved: {current_filename}")
 else:
     print(f"Error: 当月 ({current_filename}) のフィルターリストが見つかりませんでした (Status Code: {response.status_code})")
     exit(1)
