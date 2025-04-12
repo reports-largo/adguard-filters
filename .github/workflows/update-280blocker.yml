@@ -1,12 +1,12 @@
-name: Update 280blocker Filter
+name: Update 280blocker filter
 
 on:
   schedule:
-    - cron: '0 0 * * *' # 毎日 9:00 JST
-  workflow_dispatch: {}
+    - cron: '0 0 * * *'  # 毎日 9:00 JST
+  workflow_dispatch:
 
 jobs:
-  update:
+  update-280blocker:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -15,14 +15,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: 18 # または使用しているバージョン
 
-      - name: Install puppeteer
-        run: npm install puppeteer
-
-      - name: Run Puppeteer script to download 280blocker filter
+      - name: Install and start Xvfb
         run: |
-          node ./scripts/update-280blocker.js
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+          Xvfb :99 -screen 0 1280x1024x24 &
+          export DISPLAY=:99
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run update script
+        run: node ./scripts/update-280blocker.js
 
       - name: Commit and push changes
         run: |
