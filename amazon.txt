@@ -5,18 +5,18 @@
 ! Last modified: 2025-04-12T06:01:40.123Z
 ! Homepage: https://github.com/reports-largo/adguard-filters
 ! 
-! === YouTube アプリ広告 最強ブロックセット ===
-||youtubeadservice.google.com^$important
-||ads.youtube.com^$important
-||pagead2.googlesyndication.com^$important
-||googleads.g.doubleclick.net^$important
-||ad.doubleclick.net^$important
-||tpc.googlesyndication.com^$important
-||pubads.g.doubleclick.net^$important
-||securepubads.g.doubleclick.net^$important
-||redirector.googlevideo.com^$important
-||r[0-9]*.googlevideo.com^$important
-||ytad.googleusercontent.com^$important
-||manifest.googlevideo.com/api/manifest/hfr/ads^$important
-||video-ad-stats.l.google.com^$important
-! 最後の行を削除（googlevideo.com全体をブロックするとYouTube自体が機能しなくなります）
+! === Amazon アプリ広告 最強ブロックセット ===
+||amazon-adsystem.com^
+||fls-na.amazon.com^
+||fls-fe.amazon.com^
+||aax-us-east.amazon-adsystem.com^
+||aax-eu.amazon-adsystem.com^
+||mads.amazon-adsystem.com^
+||amazon.demdex.net^
+||pixel.amazon.com^
+||advertising-api.amazon.com^
+||assoc-amazon.jp^
+||partner.amazon.co.jp^
+||completion.amazon.com^
+||media.amazonwebservices.com^
+||s0.2mdn.net^
