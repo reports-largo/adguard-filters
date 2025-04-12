@@ -1,25 +1,45 @@
-from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
-import time
+name: Auto Update 280blocker Filter
 
-# Firefox をヘッドレスモードで起動
-options = Options()
-options.headless = True
+on:
+  schedule:
+    - cron: '0 15 * * *' # 毎日午前0時に実行 (JSTだと午前9時)
+  workflow_dispatch: # 手動実行を可能にする
 
-driver = webdriver.Firefox(options=options)
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-try:
-    # 280blocker にアクセス
-    driver.get("https://280blocker.net/files/280blocker_adblock.txt")
-    time.sleep(2)  # サーバー応答待ち
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
 
-    # フィルター内容を取得
-    filter_content = driver.find_element("tag name", "pre").text
+      - name: Install dependencies
+        run: |
+          pip install requests
+          pip install selenium  # selenium をインストールするコマンドを追加
 
-    # ファイルに保存
-    with open("280blocker_adblock.txt", "w", encoding="utf-8") as f:
-        f.write(filter_content)
+      - name: Set User-Agent
+        run: echo "USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" >> $GITHUB_ENV
 
-    print("Successfully downloaded 280blocker filter")
-finally:
-    driver.quit()
+      - name: Download and update filter
+        run: python update_filter_script.py
+          env:
+            USER_AGENT: ${{ env.USER_AGENT }}
+
+      - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "Your Bot Name"
+          git config --global user.email "your-bot-email@example.com"
+          git add 280blocker_adblock.txt # 保存したファイル名
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "自動更新: 280blockerフィルターを更新"
+            git push origin main
+          fi
