@@ -1,1 +1,33 @@
+name: Update 280blocker Filter
 
+on:
+  schedule:
+    - cron: '0 0 * * *' # 毎日 9:00 JST
+  workflow_dispatch: {}
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install puppeteer
+        run: npm install puppeteer
+
+      - name: Run Puppeteer script to download 280blocker filter
+        run: |
+          node ./scripts/update-280blocker.js
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add filters/280blocker.txt
+          git commit -m 'Auto-update 280blocker filter' || echo "No changes to commit"
+          git push
