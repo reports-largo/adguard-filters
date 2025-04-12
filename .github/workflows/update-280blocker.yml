@@ -17,16 +17,24 @@ jobs:
         with:
           node-version: 18
 
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: scripts/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('scripts/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./scripts
+
       - name: Install and start Xvfb
         run: |
           sudo apt-get update
           sudo apt-get install -y xvfb
           Xvfb :99 -screen 0 1280x1024x24 &
           echo "DISPLAY=:99" >> $GITHUB_ENV
-
-      - name: Install dependencies
-        run: npm install
-        working-directory: ./scripts
 
       - name: Run update script
         run: node update-280blocker.js
