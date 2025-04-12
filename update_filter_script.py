@@ -1,28 +1,25 @@
-import requests
-from datetime import datetime
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+import time
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0',
-    'Referer': 'https://280blocker.net/'
-}
+# Firefox をヘッドレスモードで起動
+options = Options()
+options.headless = True
 
-now = datetime.now()
-year = now.year
-month = now.month
+driver = webdriver.Firefox(options=options)
 
-current_filename = f"280blocker_adblock_{year:04d}{month:02d}.txt"
-base_url = "https://280blocker.net/files/"
-current_url = base_url + current_filename
-output_filename = "280blocker_adblock.txt" # 保存するファイル名は固定
+try:
+    # 280blocker にアクセス
+    driver.get("https://280blocker.net/files/280blocker_adblock.txt")
+    time.sleep(2)  # サーバー応答待ち
 
-response = requests.get(current_url, headers=headers)
+    # フィルター内容を取得
+    filter_content = driver.find_element("tag name", "pre").text
 
-if response.status_code == 200:
-    # ファイルが存在する場合
-    filter_content = response.text
-    with open(output_filename, "w") as f:
+    # ファイルに保存
+    with open("280blocker_adblock.txt", "w", encoding="utf-8") as f:
         f.write(filter_content)
-    print(f"Successfully downloaded and saved: {current_filename}")
-else:
-    print(f"Error: 当月 ({current_filename}) のフィルターリストが見つかりませんでした (Status Code: {response.status_code})")
-    exit(1)
+
+    print("Successfully downloaded 280blocker filter")
+finally:
+    driver.quit()
