@@ -1,0 +1,35 @@
+adgurdフィルタ
+
+─────────────────────────────────────────────
+フィルター名                   用途・効果
+─────────────────────────────────────────────
+Yuki2718 jpf-plus.txt          日本サイト広告ブロックの基盤
+https://raw.githubusercontent.com/Yuki2718/adblock2/main/japanese/jpf-plus.txt
+
+280blocker                     日本向け広告・迷惑要素ブロック（Safari に強い）
+https://raw.githubusercontent.com/reports-largo/adguard-filters/refs/heads/main/filters/280blocker.txt
+
+豆腐フィルタ（Tofukko filter）   日本のまとめサイト・ブログ系広告に強い
+https://raw.githubusercontent.com/tofukko/filter/master/Adblock_Plus_list.txt
+
+AdGuard module                     AdGuard 公式のプライバシー保護フィルター（新規追加）
+https://raw.githubusercontent.com/Yuki2718/adblock2/refs/heads/main/japanese/jpfp-ag.txt
+
+AdGuard DNS filter             iOS 用 DNS フィルターの定番（互換性が高い）
+https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
+
+uBlock filters - main          世界的広告ブロック（多言語サイト対応）
+https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt
+
+OISD small                     DNS レベルで軽快に幅広くブロック（アプリにも効果的）
+https://small.oisd.nl/
+
+もちフィルタ（オプション）      日本向け追加フィルター（過剰感あり・好みで）
+https://raw.githubusercontent.com/eEIi0A5L/adblock_filter/master/mochi_filter_extended.txt
+
+	
+─────────────────────────────────────────────
+
+https://raw.githubusercontent.com/reports-largo/adguard-filters/refs/heads/main/youtube.txt
+https://raw.githubusercontent.com/reports-largo/adguard-filters/refs/heads/main/amazon.txt
+https://raw.githubusercontent.com/reports-largo/adguard-filters/refs/heads/main/google.txt
